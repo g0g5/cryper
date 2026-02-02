@@ -1,0 +1,10 @@
+[project]
+name = "cryper"
+version = "0.1.0"
+description = "Encrypt and decrypt files with plausible document names"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["cryptography"]
+
+[project.scripts]
+cryper = "cryper.cli:main"
