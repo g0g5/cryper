@@ -14,36 +14,10 @@
 - `pyproject.toml`: package metadata and dependencies.
 
 ## Environment and dependencies
-- Requires: Python >= 3.12.
 - Runtime dependency: `cryptography` (already in `pyproject.toml`).
-- No dev-only tooling is configured yet (formatter, linter, test runner).
-
-## Build, lint, test commands
-These are based on current repo contents. If you add tooling, update this section.
-
-### Install (editable dev)
-- `python -m pip install -e .`
-
-### Run the CLI locally
-- `cryper encrypt <path>`
-- `cryper decrypt <path>`
-- `python -m cryper.cli encrypt <path>` (module invocation)
-
-### Build
-- No build backend is configured beyond PEP 621 metadata.
-- If build tooling is added later, prefer:
-  - `python -m build`
-
-### Lint/format
-- No lint or format tooling configured.
-- If adding tools, document them here (e.g., ruff, black).
-
-### Tests
-- No tests exist yet (`tests/` not found).
-- If pytest is added later:
-  - Run all tests: `python -m pytest`
-  - Run a single test file: `python -m pytest tests/test_file.py`
-  - Run a single test: `python -m pytest tests/test_file.py::test_name`
+- Always use `uv run main.py` to run the application.
+- Do not use system python directly.
+- Do not install dependencies yourself. If dependencies are missing, tell the user to install them using `uv`.
 
 ## Code style and conventions
 
@@ -102,13 +76,3 @@ These are based on current repo contents. If you add tooling, update this sectio
 - Exit codes match spec.
 - Encryption/decryption stream behavior matches spec.
 - Header layout and HMAC construction match spec.
-
-## Cursor and Copilot rules
-- No `.cursor/rules/`, `.cursorrules`, or `.github/copilot-instructions.md`
-  files are present in this repo at the moment.
-- If such files are added, incorporate their guidance here.
-
-## Suggested future additions (if requested)
-- Add tests under `tests/` and document `pytest` usage here.
-- Add a formatter/linter (ruff/black) and capture commands above.
-- Add CI workflows and mention how to run them locally.

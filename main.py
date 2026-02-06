@@ -1,6 +1,4 @@
-def main():
-    print("Hello from cryper!")
-
+from cryper.cli import main as cli_main
 
 if __name__ == "__main__":
-    main()
+    cli_main()
