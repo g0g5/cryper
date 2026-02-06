@@ -3,8 +3,6 @@
 CLI tool to encrypt and decrypt files with random alphanumeric filenames.
 Designed for large files with streaming I/O and parallel chunk processing.
 
-Spec: `docs/cryper.spec.md`
-
 ## Install
 
 Requirements: Python 3.12+.
@@ -44,7 +42,7 @@ Common options:
 
 Encrypt-only options:
 
-- `--keep-name`: do not randomize filename; output as `<original>.enc`.
+- `--keep-name`: do not randomize filename; output as `<original>.crp`.
 
 Decrypt-only options:
 

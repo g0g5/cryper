@@ -232,7 +232,7 @@ def _encrypt_file(args: argparse.Namespace) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     if args.keep_name:
-        output_name = f"{input_path.name}.enc"
+        output_name = f"{input_path.name}.crp"
     else:
         output_name = _generate_output_name()
 

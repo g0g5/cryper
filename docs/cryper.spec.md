@@ -1,12 +1,12 @@
 # cryper: Spec (v0.1)
 
-This document specifies a CLI program that (1) renames a file to a plausible document-like name and (2) encrypts it with AES-256, and can later (3) decrypt it and restore the original filename.
+This document specifies a CLI program that (1) renames a file to a random name with .crp extension and (2) encrypts it with AES-256, and can later (3) decrypt it and restore the original filename.
 
 Scope: single-file encrypt/decrypt. Large-file oriented (200MB to ~2GB) with streaming I/O and parallel chunk processing.
 
 ## Goals
 
-- Encrypt a single input file to a new file with a generated “document-like” name.
+- Encrypt a single input file to a new file with a generated 16-character random string and .crp extension.
 - Decrypt an encrypted file back to plaintext and restore the original base filename.
 - AES-256 encryption with authenticated integrity.
 - Streaming operation (do not load whole file into RAM).
@@ -41,8 +41,7 @@ Passphrase options (encrypt + decrypt):
 
 Encrypt-only options:
 
-- `--ext {docx,pptx,xlsx}`: force output extension; otherwise randomly choose from the set.
-- `--keep-name`: do not randomize filename; encrypt to `<original>.enc` (mainly for testing).
+- `--keep-name`: do not randomize filename; encrypt to `<original>.crp` (mainly for testing).
 
 Decrypt-only options:
 
@@ -60,26 +59,13 @@ Exit codes:
 
 Generated output base name format:
 
-`<YYYY><MM>_<STATE>_<DOCTYPE>_<RANDOM>.<EXT>`
+`<RANDOM_16_CHARS>.crp`
 
-- `YYYY`: current year (4 digits)
-- `MM`: current month (2 digits)
-- `STATE`: token from US states list (sanitized: ASCII letters and underscores only)
-- `DOCTYPE`: token from common document types list (sanitized)
-- `RANDOM`: 6 digits from a cryptographically secure RNG (`secrets`)
-- `EXT`: one of `docx`, `pptx`, `xlsx`
+- `RANDOM_16_CHARS`: 16 characters from a cryptographically secure random string generator (alphanumeric: `[a-zA-Z0-9]`)
 
 Collision handling:
 
 - If the generated output path already exists, fail (no overwrite, no auto-rename).
-
-US state tokens (example set; full list is the 50 states, space replaced with `_`):
-
-- `Alabama`, `Alaska`, `Arizona`, ... `New_York`, ... `Wyoming`
-
-Document type tokens (initial set; can be extended later):
-
-- `report`, `summary`, `analysis`, `brief`, `notes`, `minutes`, `proposal`, `plan`, `review`, `update`
 
 ## Cryptography
 
@@ -233,7 +219,6 @@ Temp file naming:
 
 ## Security Notes
 
-- Using a fake Office extension is intentionally misleading; users should treat these files as encrypted blobs.
 - Passphrases should be high-entropy; recommend a password manager.
 - CTR + HMAC is secure when IV is unique per file and keys are derived safely (scrypt + random salt).
 
