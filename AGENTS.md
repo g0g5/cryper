@@ -19,6 +19,11 @@
 - Do not use system python directly.
 - Do not install dependencies yourself. If dependencies are missing, tell the user to install them using `uv`.
 
+## Building Windows binary
+- Run `uv run build_exe.py` to compile the project into a standalone Windows executable using Nuitka.
+- Build output: middle files go to `./build/`, final exe goes to `./dist/cryper.exe`.
+- Nuitka is configured in `build_exe.py` with `--onefile` mode for single-file distribution.
+
 ## Code style and conventions
 
 ### General style

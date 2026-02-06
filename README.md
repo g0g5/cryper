@@ -15,6 +15,17 @@ From a local clone:
 python -m pip install -e .
 ```
 
+## Building Windows binary
+
+To compile the project into a standalone Windows executable using Nuitka:
+
+```bash
+uv run build_exe.py
+```
+
+This will generate `./dist/cryper.exe` which can be distributed without requiring Python installation.
+Build artifacts (intermediate files) are placed in `./build/`.
+
 ## Usage
 
 ```bash
