@@ -67,8 +67,16 @@ dependencies = [
     { name = "cryptography" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "nuitka" },
+]
+
 [package.metadata]
 requires-dist = [{ name = "cryptography" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "nuitka", specifier = ">=4.0" }]
 
 [[package]]
 name = "cryptography"
@@ -122,6 +130,12 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/0a/21/f7433d18fe6d5845329cbdc597e30caf983229c7a245bcf54afecc555938/cryptography-46.0.4-cp38-abi3-win32.whl", hash = "sha256:0563655cb3c6d05fb2afe693340bc050c30f9f34e15763361cf08e94749401fc", size = 3009779, upload-time = "2026-01-28T00:24:20.198Z" },
     { url = "https://files.pythonhosted.org/packages/3a/6a/bd2e7caa2facffedf172a45c1a02e551e6d7d4828658c9a245516a598d94/cryptography-46.0.4-cp38-abi3-win_amd64.whl", hash = "sha256:fa0900b9ef9c49728887d1576fd8d9e7e3ea872fa9b25ef9b64888adc434e976", size = 3466633, upload-time = "2026-01-28T00:24:21.851Z" },
 ]
+
+[[package]]
+name = "nuitka"
+version = "4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e5/d6/477dc84457fc07885f5fd020da4920e8a2787b2c04563ad444ac98f7d3eb/nuitka-4.0.tar.gz", hash = "sha256:0f404f292c3c2cc808d186d05a6d06a4b0aeca93f299cdfd5e33ddbcd19ab560", size = 4410008, upload-time = "2026-02-05T20:52:39.747Z" }
 
 [[package]]
 name = "pycparser"

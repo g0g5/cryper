@@ -6,7 +6,6 @@ import struct
 import sys
 from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass
-from datetime import datetime
 from pathlib import Path
 
 from cryptography.exceptions import InvalidSignature
@@ -30,72 +29,6 @@ SCRYPT_N_LOG2 = 20
 SCRYPT_R = 8
 SCRYPT_P = 1
 SCRYPT_SALT_LEN = 16
-
-DOC_TYPES = [
-    "report",
-    "summary",
-    "analysis",
-    "brief",
-    "notes",
-    "minutes",
-    "proposal",
-    "plan",
-    "review",
-    "update",
-]
-
-STATES = [
-    "Alabama",
-    "Alaska",
-    "Arizona",
-    "Arkansas",
-    "California",
-    "Colorado",
-    "Connecticut",
-    "Delaware",
-    "Florida",
-    "Georgia",
-    "Hawaii",
-    "Idaho",
-    "Illinois",
-    "Indiana",
-    "Iowa",
-    "Kansas",
-    "Kentucky",
-    "Louisiana",
-    "Maine",
-    "Maryland",
-    "Massachusetts",
-    "Michigan",
-    "Minnesota",
-    "Mississippi",
-    "Missouri",
-    "Montana",
-    "Nebraska",
-    "Nevada",
-    "New_Hampshire",
-    "New_Jersey",
-    "New_Mexico",
-    "New_York",
-    "North_Carolina",
-    "North_Dakota",
-    "Ohio",
-    "Oklahoma",
-    "Oregon",
-    "Pennsylvania",
-    "Rhode_Island",
-    "South_Carolina",
-    "South_Dakota",
-    "Tennessee",
-    "Texas",
-    "Utah",
-    "Vermont",
-    "Virginia",
-    "Washington",
-    "West_Virginia",
-    "Wisconsin",
-    "Wyoming",
-]
 
 
 class CryperError(Exception):
@@ -281,15 +214,10 @@ def _parse_header(file_obj) -> tuple[str, MetaInfo, bytes]:
     return filename, meta, bytes(header)
 
 
-def _generate_output_name(ext: str | None) -> str:
-    now = datetime.now()
-    year = f"{now.year:04d}"
-    month = f"{now.month:02d}"
-    state = secrets.choice(STATES)
-    doc_type = secrets.choice(DOC_TYPES)
-    rand = f"{secrets.randbelow(1_000_000):06d}"
-    extension = ext or secrets.choice(["docx", "pptx", "xlsx"])
-    return f"{year}{month}_{state}_{doc_type}_{rand}.{extension}"
+def _generate_output_name() -> str:
+    alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    random_name = "".join(secrets.choice(alphabet) for _ in range(16))
+    return f"{random_name}.crp"
 
 
 def _encrypt_file(args: argparse.Namespace) -> None:
@@ -306,7 +234,7 @@ def _encrypt_file(args: argparse.Namespace) -> None:
     if args.keep_name:
         output_name = f"{input_path.name}.enc"
     else:
-        output_name = _generate_output_name(args.ext)
+        output_name = _generate_output_name()
 
     output_path = out_dir / output_name
     if output_path.exists():
@@ -497,7 +425,6 @@ def main(argv: list[str] | None = None) -> None:
 
     encrypt_parser = subparsers.add_parser("encrypt", help="encrypt a file")
     encrypt_parser.add_argument("input_path")
-    encrypt_parser.add_argument("--ext", choices=["docx", "pptx", "xlsx"])
     encrypt_parser.add_argument("--keep-name", action="store_true")
     _add_common_args(encrypt_parser)
     encrypt_parser.set_defaults(handler=_encrypt_file)

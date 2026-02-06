@@ -8,3 +8,8 @@ dependencies = ["cryptography"]
 
 [project.scripts]
 cryper = "cryper.cli:main"
+
+[dependency-groups]
+dev = [
+    "nuitka>=4.0",
+]

@@ -1,8 +1,7 @@
 # cryper
 
-CLI tool to encrypt and decrypt files while using plausible document-like
-filenames. Designed for large files with streaming I/O and parallel chunk
-processing.
+CLI tool to encrypt and decrypt files with random alphanumeric filenames.
+Designed for large files with streaming I/O and parallel chunk processing.
 
 Spec: `docs/cryper.spec.md`
 
@@ -34,7 +33,6 @@ Common options:
 
 Encrypt-only options:
 
-- `--ext {docx,pptx,xlsx}`: force output extension.
 - `--keep-name`: do not randomize filename; output as `<original>.enc`.
 
 Decrypt-only options:
@@ -52,7 +50,7 @@ cryper encrypt "C:\\data\\budget.xlsx"
 Decrypt a file (prompts for passphrase):
 
 ```bash
-cryper decrypt "C:\\data\\2026_02_Texas_report_814233.docx"
+cryper decrypt "C:\\data\\r19IjpjRZtc5jQTl.crp"
 ```
 
 Use an environment variable for the passphrase:
@@ -62,19 +60,19 @@ set CRYPER_PASSPHRASE=correct-horse-battery-staple
 cryper encrypt "C:\\data\\notes.txt" --passphrase-env CRYPER_PASSPHRASE
 ```
 
-Encrypt to a specific output directory and extension:
+Encrypt to a specific output directory:
 
 ```bash
-cryper encrypt "C:\\data\\notes.txt" --out-dir "C:\\vault" --ext xlsx
+cryper encrypt "C:\\data\\notes.txt" --out-dir "C:\\vault"
 ```
 
 Decrypt to a custom output name:
 
 ```bash
-cryper decrypt "C:\\vault\\2026_02_Ohio_review_552901.xlsx" --output-name notes.txt
+cryper decrypt "C:\\vault\\aB3xK7qP2mN8rT4l.crp" --output-name notes.txt
 ```
 
 ## Notes
 
-- Output filenames mimic common Office extensions but contain encrypted data.
+- Output filenames are 16-character random alphanumeric strings with `.crp` extension.
 - Existing output paths are never overwritten; collisions fail.
